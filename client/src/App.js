@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { LoginPage } from 'scenes/loginPage/LoginPage.jsx';
-import { Widget } from 'scenes/widget/Widget.jsx';
 import { Navbar } from "scenes/navbar/Navbar.jsx";
 import { HomePage } from "scenes/homePage/HomePage.jsx";
 import { ProfilePage } from "scenes/profilePage/ProfilePage.jsx";
@@ -18,16 +17,22 @@ function App() {
   const isAuth = Boolean(useSelector((state) => state.token));
   
   return (
-    <div className="app">
+<div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<LoginPage/>} />
-            <Route path="/home" element={<HomePage/>} />
-            <Route path="/profile/:userI" element={<ProfilePage/>} />          
+            <Route path="/" element={<LoginPage />} />
+            <Route
+              path="/home"
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
           </Routes>
-          </ThemeProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );
